@@ -13,4 +13,10 @@ The script `ua_scannerbackup.bat` uploads Agilent DNA Microarray scanner outputs
 - 8pm Friday, then every hour until 7am the following day.
 The settings for this profile can be found in `syncbackpro_profile.sps`.
 
+# Logging
+
+The outputs of the upload agent are logged to files in 'C:\scanner\dnanexus_backup\logs'. Files older than one year are removed by the script.
+
+If the error log contains the string 'ERROR' and 'failed after 3', an error is logged to the Windows application event log. This indiciates that there have been 3 failed attempts to upload a file.
+
 ### Viapath Genome Informatics
