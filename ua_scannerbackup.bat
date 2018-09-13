@@ -16,7 +16,7 @@ set UA_PATH=C:\Users\scanner\AppData\Roaming\DNAnexus\Upload Agent
 set feat_files=
 set scanim_files=
 for %%i in (F:\FeatureExtraction\*) DO set feat_files=!feat_files! %%i
-for %%f in (F:\SacnnerImages\*) DO set scanim_files=!scanim_files! %%f
+for %%f in (F:\ScannerImages\*) DO set scanim_files=!scanim_files! %%f
 
 :: Call the upload agent for each directory
 ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /FeatureExtraction %feat_files%
