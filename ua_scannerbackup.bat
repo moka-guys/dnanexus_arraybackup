@@ -19,7 +19,7 @@ for %%i in (F:\FeatureExtraction\*) DO set feat_files=!feat_files! %%i
 for %%f in (F:\ScannerImages\*) DO set scanim_files=!scanim_files! %%f
 
 :: Set log file with current date - e.g. ua_scannerbackup_20180913.log
-set log="logs\ua_scannerbackup_%date:~-4,4%%date:~-10,2%%date:~-7,2%.log"
+set log="C:\Users\scanner\dnanexus_backup\logs\ua_scannerbackup_%date:~-4,4%%date:~-7,2%%date:~-10,2%.log"
 
 :: Call the upload agent for each directory. Write stdout and stderr to logfile
 ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /FeatureExtraction %feat_files% >> %log% 2>&1
