@@ -18,6 +18,18 @@ set scanim_files=
 for %%i in (F:\FeatureExtraction\*) DO set feat_files=!feat_files! %%i
 for %%f in (F:\ScannerImages\*) DO set scanim_files=!scanim_files! %%f
 
-:: Call the upload agent for each directory
-ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /FeatureExtraction %feat_files%
-ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /ScannerImages %scanim_files%
+:: Set log file with current date - e.g. ua_scannerbackup_20180913.log
+set log="C:\Users\scanner\dnanexus_backup\logs\ua_scannerbackup_%date:~-4,4%%date:~-7,2%%date:~-10,2%.log"
+
+:: Call the upload agent for each directory. Write stdout and stderr to logfile
+ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /FeatureExtraction %feat_files% >> %log% 2>&1
+ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /ScannerImages %scanim_files% >> %log% 2>&1
+
+:: Search for logfile for any 'error' strings. If found, search for atleast 3 attempted uploads.
+:: If found, report to windows application event log.
+findstr /I /C:"ERROR" %log% >nul
+if not errorlevel 1 ( findstr /C:"failed after 3" %log% > nul )
+if not errorlevel 1 ( eventcreate /id 666 /T ERROR /l APPLICATION /so ua_scannerbackup /d "Error with DNAnexus upload. See C:\Users\scanner\dnanexus_backup\logs")
+
+:: Delete logfiles older than 1 year
+forfiles -p "C:\Users\scanner\dnanexus_backup\logs" -s -m *.* -d -365 -c "cmd /c del @path" > nul
