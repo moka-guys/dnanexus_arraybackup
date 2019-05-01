@@ -22,8 +22,8 @@ for %%f in (F:\ScannerImages\*) DO set scanim_files=!scanim_files! %%f
 set log="C:\Users\scanner\dnanexus_backup\logs\ua_scannerbackup_%date:~-4,4%%date:~-7,2%%date:~-10,2%.log"
 
 :: Call the upload agent for each directory. Write stdout and stderr to logfile
-ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /FeatureExtraction %feat_files% >> %log% 2>&1
-ua -v --auth-token %auth_key% --project 002_180622_ArrayBackup --folder /ScannerImages %scanim_files% >> %log% 2>&1
+ua -v --auth-token %auth_key% --project 001_180622_ArrayScannerBackup --folder /FeatureExtraction %feat_files% >> %log% 2>&1
+ua -v --auth-token %auth_key% --project 001_180622_ArrayScannerBackup --folder /ScannerImages %scanim_files% >> %log% 2>&1
 
 :: Search for logfile for any 'error' strings. If found, search for atleast 3 attempted uploads.
 :: If found, report to windows application event log.
