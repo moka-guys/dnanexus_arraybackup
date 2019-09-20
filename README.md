@@ -1,20 +1,25 @@
 # dnanexus_arraybackup v0.2
 
-# About
-This repository contains files and scripts for backing up the DNA MicroArray scanner to dnanexus. On the local computer, these files can be found at C:\Users\scanner\dnanexus_backup.
+## About
+The MicroArray scanner outputs that require long-term storage. Scanner files are output to two locations:
+*  F:\FeatureExtraction
+*  F:\ScannerImages
 
-# Usage
-The script `ua_scannerbackup.bat` uploads Agilent DNA Microarray scanner outputs (found in the F:\FeatureExtraction and F:\ScannerImages folders) to DNAnexus. 
+`ua_scannerbackup.bat` calls the upload agent to store these files in DNA Nexus project 001_180622_ArrayScannerBackup. Once an upload is complete, the file is moved to the`\UPLOADED_TO_NEXUS` sub-directory.
 
-[SyncbackPro v.6](https://www.2brightsparks.com/syncback/sbpro.html) is used to routinely call this script using a backup profile. The following backup schedule is used to match the days on which the scanner is run:
+[SyncbackPro v.6](https://www.2brightsparks.com/syncback/sbpro.html) is used to call the backup script on the following schedule:
 - 8pm Wednesday, then every hour until 7am the following day.
 - 8pm Friday, then every hour until 7am the following day.
-The settings for this profile can be found in `syncbackpro_profile.sps`. To point syncback to another script, right-click the profile and select 'Modify'. In the pop-up screen, select 'Programs - Before'.
+The settings for this profile are saved in syncbackpro_profile.sps.
 
-# Logging
+## Manual backup
+Open `cmd.exe`. Run the command to upload scanner files to DNA Nexus:
+> F:\Users\scanner\dnanexus_backup\ua_scannerbackup.bat
 
-The outputs of the upload agent are logged to files in 'C:\scanner\dnanexus_backup\logs'. Logfiles older than one year are removed by the script.
+## Logging
+Logfiles are written to 'C:\scanner\dnanexus_backup\logs'. If a logfile contains the strings 'ERROR' and 'failed after 3' , an error is written to the Windows application event log. This indicates a failed upload. An alert will be raised in the #moka-alerts slack channel if configured.
 
-If the error log contains the strings 'ERROR' and 'failed after 3', an error is logged to the Windows application event log. This indiciates that there have been 3 failed attempts to upload a file.
+## Tests
+`tests\test_error.bat` writes an error to the Windows Event log. This should trigger an alert in the #moka-alerts slack if configured.
 
 ### Viapath Genome Informatics
