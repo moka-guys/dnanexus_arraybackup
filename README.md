@@ -12,7 +12,7 @@
 The settings for this profile are saved in syncbackpro_profile.sps.
 
 ## Manual backup
-Open `cmd.exe`. Run the command to upload scanner files to DNA Nexus:
+Open `cmd.exe`. Run the command:
 > F:\Users\scanner\dnanexus_backup\ua_scannerbackup.bat
 
 ## Logging
