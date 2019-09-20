@@ -1,7 +1,6 @@
 # dnanexus_arraybackup v0.2
 
-## About
-The MicroArray scanner outputs that require long-term storage. Scanner files are output to two locations:
+`ua_scannerbackup.bat` transfers MicroArray scanner files to DNA nexus for long-term storage. Files are output to two locations at the end of each scanner run:
 *  F:\FeatureExtraction
 *  F:\ScannerImages
 
