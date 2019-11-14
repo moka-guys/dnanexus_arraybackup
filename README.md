@@ -26,7 +26,7 @@ InsightOps monitors the windows event log and raises an alert via Slack and the 
 * The script has not succesfully completed within a week.
 
 ### InsightOps setup
-The Rapid7 InsightAgent is installed on the scanner PC. InsightAgent is a system service that monitors the windows event log and sends reports to the InsightOps software. To setup the service, the MokaGuys InsightOps API key is placed in the config file `"C:\Program Files\Rapid7\Insight Agent\components\insight_agent\common\config\logging.json"` and the service is restarted. Alerts are configured in InsightOps with queries for the appropriate log messages. 
+The Rapid7 InsightAgent is installed on the scanner PC. InsightAgent is a system service that monitors the windows event log and sends reports to the InsightOps software. Alerts are configured in InsightOps with queries for the appropriate log messages. 
 
 ## License
 Created by Viapath Genome Informatics
