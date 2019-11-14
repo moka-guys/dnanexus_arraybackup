@@ -1,4 +1,4 @@
-# ua_scannerbackup
+# Array Scanner Backup
 Upload files from the MicroArray scanner PC to DNANexus.
 
 ## Usage
