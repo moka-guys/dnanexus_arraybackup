@@ -4,7 +4,7 @@ Upload files from the MicroArray scanner PC to DNANexus.
 ## Usage
 > c:\Miniconda2\python.exe ua_scannerbackup.py CONFIG_INI_FILE
 
-The CONFIG_INI_FILE argument contains upload directories, dna nexus configuration and log message templates. An example can be found in `example_config.ini`.
+An example of the CONFIG_INI_FILE format can be found in `example_config.ini`.
 
 ## Description
 
