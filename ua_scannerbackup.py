@@ -42,6 +42,7 @@ def dx_upload(infile, nexus_project, auth_token):
     """Calls upload agent to upload input file to DNANexus
     Args:
         infile (str): e.g. "F:\\Scanner\\file1.txt"
+        nexus_project (str): A dnanexus project
         auth_token (str): A dnanexus authentication token
     Returns:
         returncode (int): The return code of the upload agent command. 0 = Pass, 1 = Error.
@@ -60,8 +61,8 @@ def dx_upload(infile, nexus_project, auth_token):
 def archive(infile):
     """Moves a local file to the archive directory.
     Args:
-        infile (str): e.g. "F:\\Scanner\\file1.txt"
-        archive (str): Subdirectory for archiving uploaded files"""
+        infile (str): A local file to move e.g. "F:\\Scanner\\file1.txt"
+    """
     new_path = os.path.join("F:\\UPLOADED_TO_NEXUS", os.path.basename(infile))
     # Delete file if it exists in archive. Stops the WindowsError [186] for moving to existing file.
     if os.path.isfile(new_path):
@@ -83,7 +84,7 @@ def main():
 
     # Setup script logging
     timestamp = datetime.datetime.now().strftime('%Y%m%d')
-    LOGFILE= config.get('DEFAULT','LOG_DIR') + '\ua_scannerbackup_' + timestamp + '.log'
+    LOGFILE= config.get('DEFAULT','LOG_DIR') + 'ua_scannerbackup_' + timestamp + '.log'
     logging.basicConfig(
         filename=LOGFILE, level=logging.DEBUG,
         format='%(asctime)s : %(levelname)s : %(message)s'
