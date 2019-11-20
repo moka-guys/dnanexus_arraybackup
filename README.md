@@ -1,22 +1,31 @@
-# dnanexus_arraybackup v0.1
-Author: Nana Mensah
-Created: 180911
+# Array Scanner Backup
+Upload files from the MicroArray scanner PC to DNANexus.
 
-# About
-This repository contains files and scripts for backing up the DNA MicroArray scanner to dnanexus. On the local computer, these files can be found at C:\Users\scanner\dnanexus_backup
+## Usage
+> c:\Miniconda2\python.exe ua_scannerbackup.py CONFIG_INI_FILE
 
-# Usage
-The script `ua_scannerbackup.bat` uploads Agilent DNA Microarray scanner outputs (found in the F:\FeatureExtraction and F:\ScannerImages folders) to DNAnexus. 
+An example of the CONFIG_INI_FILE format can be found in `example_config.ini`.
 
-[SyncbackPro v.6](https://www.2brightsparks.com/syncback/sbpro.html) is used to routinely call this script after the backup profile. The following schedule  is used, to match the days on which the scanner is run:
-- 8pm Wednesday, then every hour until 7am the following day.
-- 8pm Friday, then every hour until 7am the following day.
-The settings for this profile can be found in `syncbackpro_profile.sps`.
+## Description
 
-# Logging
+`ua_scannerbackup.py` uploads files in F:\ScannerImages and F:\FeatureExtraction to the DNANexus project `002_ArrayScannerBackup` using a local installation of the DNANexus upload agent. Sub-directories are excluded from the file search.
 
-The outputs of the upload agent are logged to files in 'C:\scanner\dnanexus_backup\logs'. Files older than one year are removed by the script.
+Files are archived to `F:\\UPLOADED_TO_NEXUS` once the upload is complete. A successful upload is determined by a [zero error code from the upload agent command](https://documentation.dnanexus.com/user/objects/uploading-and-downloading-files/batch/upload-agent#errors).
 
-If the error log contains the strings 'ERROR' and 'failed after 3', an error is logged to the Windows application event log. This indiciates that there have been 3 failed attempts to upload a file.
+## Schedule
+A windows task initiates the backup by calling `ua_scannerbackup.bat`, a batch file with the python command for running the script. The task is scheduled to run the morning after Array scanning is perfomed:
+- 12am Thursday, then every hour until 7am the following day.
+- 12am Saturday, then every hour until 7am the following day.
 
-### Viapath Genome Informatics
+## Logging
+Logfiles are created at `C:\Users\scanner\dnanexus_backup\logs` whenever the script is run in the format `ua_scannerbackup_YYYYMMDD.log`. When run multiple times on the same day, the script will append to a file with the same timestamp. Logs are also written to the windows event log.
+
+Logfiles are also uploaded to DNANexus, however the logfile for the current day is skipped to avoid errors from writing and uploading. This is uploaded on subsequent runs.
+
+## Alerts
+InsightOps monitors the windows event log and raises an alert via Slack and the MokaGuys email if:
+* The DNANexus upload agent fails to upload a file, returning an error code of 1.
+* The script has not succesfully completed within a week.
+
+## License
+Created by Viapath Genome Informatics
