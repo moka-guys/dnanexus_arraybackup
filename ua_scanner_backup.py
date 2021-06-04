@@ -10,7 +10,7 @@ import datetime
 import logging
 import os
 import subprocess
-import config as config
+import config
 
 
 def list_files(folder_to_backup):
