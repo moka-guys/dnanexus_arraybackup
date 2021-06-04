@@ -9,7 +9,7 @@ nexus_api_key_file = "{document_root}/.mokaguys_nexus_auth_key".format(document_
 with open(nexus_api_key_file, "r") as nexus_api:
 	Nexus_API_Key = nexus_api.readline().rstrip()
 
-backup_folder="{document_root}/ArrayImages/test_fromscanner".format(document_root=document_root)
+backup_folder="{document_root}/ArrayImages/fromscanner".format(document_root=document_root)
 archive_folder = "{document_root}/ArrayImages/backed_up".format(document_root=document_root)
 log_folder="{document_root}/ArrayImages/fromscanner/logs".format(document_root=document_root)
 DNANexus_project="002_ArrayScannerBackup"
