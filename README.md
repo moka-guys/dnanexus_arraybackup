@@ -1,4 +1,4 @@
-# ArrayScannerBackup_v2.0
+# ArrayScannerBackup_v2.0.0
 This repo contains two scripts which back up Array files to DNANexus.
 
 There are two scripts, one which was designed to run on windows and another which runs on Linux.
