@@ -91,7 +91,7 @@ def main():
             stdout, stderr, returncode = dx_upload(filepath)
             # if the upload agent completed successfully it would return a result code of 0
             # so if it's not a status of 0 or  if one of the success statements are not present assume it has failed, report and do not archive
-            if returncode != 0 and config.ua_already_uploaded not in stdout and ua_success_statement not in stdout :
+            if returncode != 0 and config.ua_already_uploaded not in stdout and config.ua_success_statement not in stdout :
                 execute_subprocess_command(config.log_command % ("error uploading " + filepath +".stderr = " + stderr))
                 logging.error(config.upload_error_message + "%s.stderr = %s" % (filepath,stderr))
             # if one of the success statements present, or result code == 0
