@@ -54,9 +54,8 @@ def archive(infile):
     # use dirname to get the relative path of the new filepath
     # mkdir -p creates multiple folders if required and doesn't fail if they already exist
     command = 'mkdir -p "$(dirname \'%s\')"' % (new_path)
-    print command
     mkdir_stdout,mkdir_stderr,mkdir_return_code = execute_subprocess_command(command)
-    print mkdir_stdout,mkdir_stderr,mkdir_return_code
+    
     if mkdir_return_code != 0:
         logging.error("failed to make directory %s. stderr: %s" % (command,mkdir_stderr))
     
