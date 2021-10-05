@@ -9,9 +9,10 @@ nexus_api_key_file = "{document_root}/.mokaguys_nexus_auth_key".format(document_
 with open(nexus_api_key_file, "r") as nexus_api:
 	Nexus_API_Key = nexus_api.readline().rstrip()
 
-backup_folder="{document_root}/ArrayImages/fromscanner".format(document_root=document_root)
+folder_to_be_backedup = "fromscanner"
+backup_folder="{document_root}/ArrayImages/{folder_to_be_backedup}".format(document_root=document_root,folder_to_be_backedup=folder_to_be_backedup)
 archive_folder = "{document_root}/ArrayImages/backed_up".format(document_root=document_root)
-log_folder="{document_root}/ArrayImages/fromscanner/logs".format(document_root=document_root)
+log_folder="{document_root}/ArrayImages/{folder_to_be_backedup}/logs".format(document_root=document_root,folder_to_be_backedup=folder_to_be_backedup)
 DNANexus_project="002_ArrayScannerBackup"
 
 ua_already_uploaded = "which is 100% complete. Will not resume uploading it"
