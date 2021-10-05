@@ -17,7 +17,7 @@ def list_files(folder_to_backup):
     """
     Walks the input directory and returns absolute path to each file.
     Args:
-        folder_to_backup (eg /usr/local/src/mokaguys/ArrayImages/fromscanner
+        folder_to_backup (eg /usr/local/src/mokaguys/ArrayImages/fromscanner)
     Returns:
         generator, yielding file path to each file one at a time.
     """
@@ -34,13 +34,14 @@ def dx_upload(infile):
         output of execute_subprocess_command (tuple of stdout, stderr,return_code).
     """
     # capture the name of the folder the file is in (should be featureextraction, emergencyfolder, scannedimages or logs) - this is used to maintain folder structure in dnanexus.
-    dirname = os.path.basename(os.path.dirname(infile))
-    upload_command = "%s --auth-token %s --project %s --folder /%s %s" % (config.upload_agent_path, config.Nexus_API_Key, config.DNANexus_project, dirname, infile)
+    dirname = os.path.dirname(infile.split(config.folder_to_be_backedup)[1])
+    upload_command = "%s --auth-token %s --project %s --folder '%s' '%s'" % (config.upload_agent_path, config.Nexus_API_Key, config.DNANexus_project, dirname, infile)
     return execute_subprocess_command(upload_command)
 
 def archive(infile):
     """
     Moves a local file to the archive directory.
+    To avoid potential issues with subfolders not existing will try to create subfolders using mkdir -p
     Args:
         infile (str): A local file to move 
     Returns:
@@ -48,7 +49,21 @@ def archive(infile):
     """
     # replace the existing folder name with the archive folder name
     new_path = infile.replace(config.backup_folder,config.archive_folder)
-    command = "mv %s %s" % (infile,new_path)
+    
+    # the move may fail if the folder doesn't exist so make the folder path
+    # use dirname to get the relative path of the new filepath
+    # mkdir -p creates multiple folders if required and doesn't fail if they already exist
+    command = 'mkdir -p "$(dirname \'%s\')"' % (new_path)
+    print command
+    mkdir_stdout,mkdir_stderr,mkdir_return_code = execute_subprocess_command(command)
+    print mkdir_stdout,mkdir_stderr,mkdir_return_code
+    if mkdir_return_code != 0:
+        logging.error("failed to make directory %s. stderr: %s" % (command,mkdir_stderr))
+    
+    # move file to the new archive location
+    command = "mv '%s' '%s'" % (infile,new_path)
+    execute_subprocess_command(command)
+    # return stdout,stderr and return code - error handling is done outside of this function
     return execute_subprocess_command(command)
 
 def execute_subprocess_command(command):
